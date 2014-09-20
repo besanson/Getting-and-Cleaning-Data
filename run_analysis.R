@@ -30,34 +30,52 @@
   mu_sigma <- grep("mean\\(\\)|std\\(\\)", feat[, 2])
   
   joinData <- joinData[, mu_sigma]
+  
   names(joinData) <- gsub("\\(\\)", "", feat[mu_sigma, 2])
+  
   names(joinData) <- gsub("-", "", names(joinData))  
+  
   names(joinData) <- gsub("mean", "MEAN", names(joinData))
+  
   names(joinData) <- gsub("std", "STD", names(joinData)) 
 
 #3. Uses descriptive activity names to name the activities in the data set
   
   Activity <- read.table("./Data/activity_labels.txt")
+  
   Activity[, 2] <- tolower(gsub("_", "", Activity[, 2]))
+  
   substr(Activity[2, 2], 8, 8) <- toupper(substr(Activity[2, 2], 8, 8))
+  
   substr(Activity[3, 2], 8, 8) <- toupper(substr(Activity[3, 2], 8, 8))
+  
   joinLabel[, 1] <- Activity[joinLabel[, 1], 2]
+  
   names(joinLabel) <- "Activity"
 
 #4. Appropriately labels the data set with descriptive activity names
   
   names(joinSubject) <- "Subject"
+  
   cleanedData <- cbind(joinSubject, joinLabel, joinData)
+  
   write.table(cleanedData, "datasetMERGE.txt")
   
 #5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
   lenSubject <- length(table(joinSubject))
+  
   lenActivity <- dim(Activity)[1]
+  
   lenColumn <- dim(cleanedData)[2]
-  outcome <- matrix(NA, nrow=lenSubject*lenActivity, ncol=lenColumn) 
+  
+  outcome <- matrix(NA, nrow=lenSubject*lenActivity, ncol=lenColumn)
+  
   outcome <- as.data.frame(outcome)
+  
   colnames(outcome) <- colnames(cleanedData)
+  
   row <- 1
+  
       for(i in 1:lenSubject) {
             for(j in 1:lenActivity) {
               outcome[row, 1] <- sort(unique(joinSubject)[, 1])[i]
@@ -67,5 +85,6 @@
                   outcome[row, 3:lenColumn] <- colMeans(cleanedData[a&b, 3:lenColumn])
                   row <- row + 1 }
       }
+      
   write.table(outcome, "datasetAVERAGE.txt", row.names=FALSE)
   
