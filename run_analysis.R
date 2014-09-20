@@ -43,7 +43,7 @@
   
   Activity <- read.table("./Data/activity_labels.txt")
   
-  Activity[, 2] <- tolower(gsub("_", " ", Activity[, 2]))
+  Activity[, 2] <- gsub("_", " ", Activity[, 2])
   
   joinLabel[, 1] <- Activity[joinLabel[, 1], 2]
   
