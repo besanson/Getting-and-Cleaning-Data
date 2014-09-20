@@ -16,7 +16,6 @@ run_analysis.R  does the following:
     E. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.  
   
 3) The code outputs two files in the current working directory:  
-  
-  i) datasetMERGE.txt (clean data)  
-  ii) datasetAVERAGE.txt (average of each variable for each activity and each subject)  
-  
+
+    i) datasetMERGE.txt (clean data)  
+    ii) datasetAVERAGE.txt (average of each variable for each activity and each subject)  
