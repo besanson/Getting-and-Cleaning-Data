@@ -43,11 +43,7 @@
   
   Activity <- read.table("./Data/activity_labels.txt")
   
-  Activity[, 2] <- tolower(gsub("_", "", Activity[, 2]))
-  
-  substr(Activity[2, 2], 8, 8) <- toupper(substr(Activity[2, 2], 8, 8))
-  
-  substr(Activity[3, 2], 8, 8) <- toupper(substr(Activity[3, 2], 8, 8))
+  Activity[, 2] <- tolower(gsub("_", " ", Activity[, 2]))
   
   joinLabel[, 1] <- Activity[joinLabel[, 1], 2]
   
@@ -62,15 +58,14 @@
   write.table(cleanedData, "datasetMERGE.txt")
   
 #5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
+  
   lenSubject <- length(table(joinSubject))
   
   lenActivity <- dim(Activity)[1]
   
   lenColumn <- dim(cleanedData)[2]
   
-  outcome <- matrix(NA, nrow=lenSubject*lenActivity, ncol=lenColumn)
-  
-  outcome <- as.data.frame(outcome)
+  outcome <- as.data.frame(matrix(NA, lenSubject*lenActivity, lenColumn))
   
   colnames(outcome) <- colnames(cleanedData)
   
